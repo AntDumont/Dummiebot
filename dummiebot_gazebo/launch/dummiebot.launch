@@ -1,0 +1,14 @@
+<launch>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find dummiebot_gazebo)/worlds/dummiebot.world"/>
+    <arg name="verbose" value="true"/>
+  </include>
+  <!-- ros_control dummiebot launch file -->
+  <include file="$(find dummiebot_control)/launch/dummiebot_control.launch"/>
+
+  <param name="robot_description" command="$(find xacro)/xacro '$(find dummiebot_description)/urdf/dummiebot.xacro'"/>
+
+  <node name="dummiebot_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param dummiebot_description -model dummiebot"/>
+
+</launch>

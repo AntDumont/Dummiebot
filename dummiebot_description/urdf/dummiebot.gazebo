@@ -1,0 +1,22 @@
+<robot name="dummiebot">
+
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/dummiebot</robotNamespace>
+      <!--<robotParam>dummiebot/dummiebot_description</robotParam>-->
+    </plugin>
+  </gazebo>
+
+  <gazebo>
+    <material>Gazebo/White</material>
+  </gazebo>
+  <gazebo reference="caster_wheel">
+    <mu1>0.0</mu1>
+    <mu2>0.0</mu2>
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <gazebo reference="chassis">
+    <self_collide>true</self_collide>
+  </gazebo>
+
+</robot>

@@ -1,0 +1,207 @@
+<?xml version="1.0"?>
+<robot name="dummiebot" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- Parameters -->
+  <xacro:property name="PI" value="3.14159"/>
+
+  <xacro:property name="chassis_height" value="0.2"/>
+  <xacro:property name="chassis_length" value="0.6"/>
+  <xacro:property name="chassis_width" value="0.5"/>
+  <xacro:property name="chassis_mass" value="50"/>
+
+  <xacro:property name="caster_radius" value="0.05"/>
+  <xacro:property name="caster_mass" value="5"/>
+
+  <xacro:property name="wheel_width" value="0.05"/>
+  <xacro:property name="wheel_radius" value="0.2"/>
+  <xacro:property name="wheel_pos" value="0.2"/>
+  <xacro:property name="wheel_mass" value="5"/>
+
+  <xacro:property name="body_height" value="0.6"/>
+  <xacro:property name="body_length" value="0.3"/>
+  <xacro:property name="body_width" value="0.3"/>
+  <xacro:property name="body_mass" value="0.1"/>
+
+  <xacro:property name="body_joint_radius" value="0.1"/>
+  <xacro:property name="body_joint_mass" value="1"/>
+
+  <!-- Inclusions -->
+  <xacro:include filename="$(find dummiebot_description)/urdf/dummiebot.gazebo"/>
+  <xacro:include filename="$(find dummiebot_description)/urdf/materials.xacro"/>
+  <xacro:include filename="$(find dummiebot_description)/urdf/macros.xacro"/>
+
+  <!-- Structure -->
+  <link name="footprint"/>
+
+  <joint name="base_joint" type="fixed">
+    <parent link="footprint"/>
+    <child link="chassis"/>
+  </joint>
+
+  <link name="chassis">
+    <collision>
+      <origin xyz="0 0 ${wheel_radius}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 ${wheel_radius}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+    <inertial>
+      <origin xyz="0 0 ${wheel_radius}" rpy="0 0 0"/>
+      <mass value="${chassis_mass}"/>
+      <box_inertia m="${chassis_mass}" x="${chassis_length}" y="${chassis_width}" z="${chassis_height}"/>
+    </inertial>
+  </link>
+
+  <joint name="chassis_caster" type="fixed">
+    <parent link="chassis"/>
+    <child link="caster_wheel"/>
+  </joint>
+
+  <link name="caster_wheel">
+    <collision>
+      <origin xyz="${caster_radius - chassis_length / 2} 0 ${caster_radius - chassis_height + wheel_radius}" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="${caster_radius}"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="${caster_radius - chassis_length / 2} 0 ${caster_radius - chassis_height + wheel_radius}" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="${caster_radius}"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <inertial>
+      <origin xyz="${caster_radius - chassis_length / 2} 0 ${caster_radius - chassis_height + wheel_radius}" rpy="0 0 0"/>
+      <mass value="${caster_mass}"/>
+      <sphere_inertia m="${caster_mass}" r="${caster_radius}"/>
+    </inertial>
+  </link>
+
+  <wheel lr="left" tY="1"/>
+  <wheel lr="right" tY="-1"/>
+
+  <joint name="chassis_body_joint" type="revolute">
+    <parent link="chassis"/>
+    <child link="body_joint"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="0 0 ${chassis_height + caster_radius * 2 - body_joint_radius / 2}" rpy="0 0 0"/>
+    <limit effort="1000.0" lower="-${PI/2}" upper="${PI/2}" velocity="0.5"/>
+  </joint>
+
+  <link name="body_joint">
+    <collision>
+    <origin xyz="0 0 ${body_joint_radius}" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="${body_joint_radius}"/>
+      </geometry>
+    </collision>
+    <visual>
+    <origin xyz="0 0 ${body_joint_radius}" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="${body_joint_radius}"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <inertial>
+    <origin xyz="0 0 ${body_joint_radius}" rpy="0 0 0"/>
+      <mass value="${body_joint_mass}"/>
+      <sphere_inertia m="${body_joint_mass}" r="${body_joint_radius}"/>
+    </inertial>
+  </link>
+
+  <joint name="body_joint_body" type="revolute">
+    <parent link="body_joint"/>
+    <child link="body"/>
+    <axis xyz="0 1 0"/>
+    <origin xyz="0 0 ${body_joint_radius * 2 - body_joint_radius / 2}" rpy="0 0 0"/>
+    <limit effort="1000.0" lower="-${PI/2}" upper="${PI/2}" velocity="0.5"/>
+  </joint>
+
+  <link name="body">
+    <collision>
+      <origin xyz="0 0 ${body_height / 2}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${body_length} ${body_width} ${body_height}"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 ${body_height / 2}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${body_length} ${body_width} ${body_height}"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+    <inertial>
+      <origin xyz="0 0 ${body_height / 2}" rpy="0 0 0"/>
+      <mass value="${body_mass}"/>
+      <box_inertia m="${body_mass}" x="${body_length}" y="${body_width}" z="${body_height}"/>
+    </inertial>
+  </link>
+
+<!--
+  <joint name="chassis_virtual1" type="fixed">
+    <parent link="chassis"/>
+    <child link="virtual1"/>
+    <origin xyz="0 0 ${chassis_height + caster_radius * 2}" rpy="0 0 0"/>
+  </joint>
+
+  <link name="virtual1">
+    <inertial>
+      <mass value="0.01"/>
+      <sphere_inertia m="0.01" r="0.1"/>
+    </inertial>
+  </link>
+
+  <joint name="virtual1_virtual2" type="revolute">
+    <parent link="virtual1"/>
+    <child link="virtual2"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="1000.0" lower="-${PI/2}" upper="${PI/2}" velocity="0.5"/>
+  </joint>
+
+  <link name="virtual2">
+    <inertial>
+      <mass value="0.01"/>
+      <sphere_inertia m="0.01" r="0.1"/>
+    </inertial>
+  </link>
+
+  <joint name="virtual2_body" type="revolute">
+    <parent link="virtual2"/>
+    <child link="body"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="1000.0" lower="-${PI/4}" upper="${PI/4}" velocity="0.5"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="body">
+    <collision>
+      <origin xyz="0 0 ${body_height / 2}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${body_length} ${body_width} ${body_height}"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 ${body_height / 2}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${body_length} ${body_width} ${body_height}"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+    <inertial>
+      <origin xyz="0 0 ${body_height / 2}" rpy="0 0 0"/>
+      <mass value="${body_mass}"/>
+      <box_inertia m="${body_mass}" x="${body_length}" y="${body_width}" z="${body_height}"/>
+    </inertial>
+  </link>
+-->
+
+</robot>
