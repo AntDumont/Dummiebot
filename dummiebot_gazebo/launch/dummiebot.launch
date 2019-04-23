@@ -7,7 +7,7 @@
   <!-- ros_control dummiebot launch file -->
   <include file="$(find dummiebot_control)/launch/dummiebot_control.launch"/>
 
-  <param name="robot_description" command="$(find xacro)/xacro '$(find dummiebot_description)/urdf/dummiebot.xacro'"/>
+  <param name="dummiebot_description" command="$(find xacro)/xacro '$(find dummiebot_description)/urdf/dummiebot.xacro'"/>
 
   <node name="dummiebot_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param dummiebot_description -model dummiebot"/>
 

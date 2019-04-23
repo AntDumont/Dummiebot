@@ -8,6 +8,55 @@
   </gazebo>
 
   <gazebo>
+    <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+      <alwaysOn>true</alwaysOn>
+      <updateRate>100</updateRate>
+      <leftJoint>left_wheel_hinge</leftJoint>
+      <rightJoint>right_wheel_hinge</rightJoint>
+      <wheelSeparation>${chassis_width+wheel_width}</wheelSeparation>
+      <wheelDiameter>${2*wheel_radius}</wheelDiameter>
+      <torque>20</torque>
+      <commandTopic>dummiebot/cmd_vel</commandTopic>
+      <odometryTopic>dummiebot/odom_diffdrive</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <robotBaseFrame>footprint</robotBaseFrame>
+    </plugin>
+  </gazebo>
+
+  <gazebo reference="camera_link">
+    <material>Gazebo/Blue</material>
+    <sensor type="camera" name="camera1">
+      <update_rate>30.0</update_rate>
+      <camera name="head">
+        <horizontal_fov>1.3962634</horizontal_fov>
+        <image>
+          <width>800</width>
+          <height>800</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.02</near>
+          <far>300</far>
+        </clip>
+      </camera>
+      <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+        <alwaysOn>true</alwaysOn>
+        <updateRate>0.0</updateRate>
+        <cameraName>dummiebot/camera1</cameraName>
+        <imageTopicName>image_raw</imageTopicName>
+        <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+        <frameName>camera</frameName>
+        <hackBaseLine>0.07</hackBaseLine>
+        <distorsionK1>0.0</distorsionK1>
+        <distorsionK2>0.0</distorsionK2>
+        <distorsionK3>0.0</distorsionK3>
+        <distorsionT1>0.0</distorsionT1>
+        <distorsionT2>0.0</distorsionT2>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <gazebo>
     <material>Gazebo/White</material>
   </gazebo>
   <gazebo reference="caster_wheel">

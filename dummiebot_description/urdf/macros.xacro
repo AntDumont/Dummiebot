@@ -54,6 +54,7 @@
 
     <joint name="${lr}_wheel_hinge" type="continuous">
       <!--<type>transmission_interface/SimpleTransmission</type>-->
+      <type>transmission_interface/SimpleTransmission</type>
       <parent link="chassis"/>
       <child link="${lr}_wheel"/>
       <origin xyz="${-wheel_pos + chassis_length / 2} ${tY * wheel_width / 2 + tY * chassis_width / 2} ${wheel_radius}" rpy="0 0 0"/>
