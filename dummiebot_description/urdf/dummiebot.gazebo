@@ -23,6 +23,10 @@
     </plugin>
   </gazebo>
 
+  <gazebo>
+    <plugin name="dummiebot_gazebo" filename="libdummiebot_gazebo.so"/>
+  </gazebo>
+
   <gazebo reference="camera_link">
     <material>Gazebo/Blue</material>
     <sensor type="camera" name="camera1">

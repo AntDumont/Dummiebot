@@ -23,6 +23,3 @@ dummiebot:
     type: effort_controllers/JointEffortController
     joint: body_joint_body
     pid: {p: 0, i: 0, d: 0}
-
-  #gazebo_ros_control/pid_gains:
-  #  chassis_body_joint: {p: 1, i: 0, d: 1}

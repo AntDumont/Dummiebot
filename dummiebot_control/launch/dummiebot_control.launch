@@ -1,5 +1,4 @@
 <launch>
-  <!--<group ns="/dummiebot">-->
 
   <!-- Load joint controller configurations from YAML file to parameter server -->
   <rosparam file="$(find dummiebot_control)/config/dummiebot_control.yaml" command="load"/>
@@ -14,8 +13,6 @@
   <!-- convert joint states to TF transforms for rviz, etc -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
     <remap from="/joint_states" to="/dummiebot/joint_states"/>
-    <!--<param name="dummiebot_description" command="$(find xacro)/xacro '$(find dummiebot_description)/urdf/dummiebot.xacro'"/>-->
   </node>
 
-  <!--</group>-->
 </launch>
