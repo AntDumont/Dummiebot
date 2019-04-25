@@ -8,22 +8,6 @@
   </gazebo>
 
   <gazebo>
-    <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
-      <alwaysOn>true</alwaysOn>
-      <updateRate>100</updateRate>
-      <leftJoint>left_wheel_hinge</leftJoint>
-      <rightJoint>right_wheel_hinge</rightJoint>
-      <wheelSeparation>${chassis_width+wheel_width}</wheelSeparation>
-      <wheelDiameter>${2*wheel_radius}</wheelDiameter>
-      <torque>20</torque>
-      <commandTopic>dummiebot/cmd_vel</commandTopic>
-      <odometryTopic>dummiebot/odom_diffdrive</odometryTopic>
-      <odometryFrame>odom</odometryFrame>
-      <robotBaseFrame>footprint</robotBaseFrame>
-    </plugin>
-  </gazebo>
-
-  <gazebo>
     <plugin name="dummiebot_gazebo" filename="libdummiebot_gazebo.so"/>
   </gazebo>
 

@@ -152,7 +152,7 @@
   <joint name="body_camera" type="fixed">
     <parent link="body"/>
     <child link="camera_link"/>
-    <origin xyz="${-body_length / 2} 0 ${body_height / 2}" rpy="0 0 ${PI}"/>
+    <origin xyz="${body_length / 2} 0 ${body_height / 2}" rpy="0 0 0"/>
   </joint>
 
   <link name="camera_link">

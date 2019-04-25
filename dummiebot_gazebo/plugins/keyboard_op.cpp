@@ -24,11 +24,7 @@ namespace gazebo{
       }
 
       this->model = _model;
-      //this->updateConnection = event::Events::ConnectWorldUpdateBegin(std::bind(&KbOperator::OnUpdate, this));
-      /*this->node = transport::NodePtr(new transport::Node());
-      this->node->Init(this->model->GetWorld()->Name());*/
 
-      //this->sub = this->node->Subscribe("dummie_move", &KbOperator::OnMsg, this);
       this->sub = this->node.subscribe("dummie_move", 1, &KbOperator::OnMsg, this);
     }
 
@@ -51,19 +47,17 @@ namespace gazebo{
           this->model->GetJoint("left_wheel_hinge")->SetVelocity(0, 10);
         }
         else if(msg->body_yaw != 0){
-          this->model->GetJoint("chassis_body_joint")->SetVelocity(0, msg->body_yaw * 10);
+          this->model->GetJoint("chassis_body_joint")->SetVelocity(0, msg->body_yaw * 5);
         }
         else if(msg->body_pitch != 0){
-          this->model->GetJoint("body_joint_body")->SetVelocity(0, msg->body_pitch * 10);
+          this->model->GetJoint("body_joint_body")->SetVelocity(0, msg->body_pitch * 5);
         }
     }
 
 
   private:
     physics::ModelPtr model;
-    //transport::NodePtr node;
     ros::NodeHandle node;
-    //transport::SubscriberPtr sub;
     ros::Subscriber sub;
   };
   GZ_REGISTER_MODEL_PLUGIN(KbOperator)
