@@ -6,8 +6,6 @@
 
 #define PI 3.14159
 
-#define TIMER
-
 class KeyboardControl{
 
 public:
@@ -17,10 +15,7 @@ public:
 
     pub_y_rotation = nh.advertise<std_msgs::Float64>("/dummiebot/y_rotation_controller/command", 1);
     pub_z_rotation = nh.advertise<std_msgs::Float64>("/dummiebot/z_rotation_controller/command", 1);
-    pub_wheel = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 1);
-    #ifdef TIMER
-    timer = nh.createTimer(ros::Duration(0.5), &KeyboardControl::checkKeyReleased, this);
-    #endif
+    pub_wheel = nh.advertise<geometry_msgs::Twist>("/dummiebot/mobile_base_controller/cmd_vel", 1);
   }
 
   void mainLoop(){
@@ -28,23 +23,22 @@ public:
     while(ros::ok()){
 
       char c = getch();
-      #ifdef TIMER
-      timer.stop();
-      timer.setPeriod(ros::Duration(0.5));
-      timer.start();
-      #endif
 
       switch(c){
         case 65: //UP
-          wheel_msg.linear.x = 2.0;
+          wheel_msg.linear.x = 1.5;
+            wheel_msg.angular.z = 0.0;
           break;
         case 66: //DOWN
-          wheel_msg.linear.x = -2.0;
+          wheel_msg.linear.x = -1.5;
+            wheel_msg.angular.z = 0.0;
           break;
         case 67: //RIGHT
+          wheel_msg.linear.x = 0.0;
           wheel_msg.angular.z = -2.0;
           break;
         case 68: //LEFT
+          wheel_msg.linear.x = 0.0;
           wheel_msg.angular.z = 2.0;
           break;
         case 'z':
@@ -105,13 +99,6 @@ public:
     return c;
   }
 
-  void checkKeyReleased(const ros::TimerEvent& e){
-    std::cout << "prout" << std::endl;
-    wheel_msg.linear.x = wheel_msg.angular.z = 0.0;
-    pub_wheel.publish(wheel_msg);
-    ros::spinOnce();
-  }
-
 private:
   bool ARROW_KEY;
 
@@ -119,7 +106,6 @@ private:
   ros::Publisher pub_y_rotation;
   ros::Publisher pub_z_rotation;
   ros::Publisher pub_wheel;
-  ros::Timer timer;
 
   std_msgs::Float64 y_rot_msg, z_rot_msg;
   geometry_msgs::Twist wheel_msg;

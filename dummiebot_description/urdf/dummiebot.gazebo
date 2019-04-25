@@ -3,10 +3,10 @@
   <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
       <robotNamespace>/dummiebot</robotNamespace>
-      <!--<robotParam>dummiebot/dummiebot_description</robotParam>-->
     </plugin>
   </gazebo>
 
+<!--
   <gazebo>
     <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
       <alwaysOn>true</alwaysOn>
@@ -22,11 +22,8 @@
       <robotBaseFrame>base_footprint</robotBaseFrame>
     </plugin>
   </gazebo>
-
-<!--  <gazebo>
-    <plugin name="dummiebot_gazebo" filename="libdummiebot_gazebo.so"/>
-  </gazebo>
 -->
+
   <gazebo reference="camera_link">
     <material>Gazebo/Blue</material>
     <sensor type="camera" name="camera1">
