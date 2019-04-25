@@ -106,7 +106,7 @@ generate_messages(DEPENDENCIES std_msgs)
 #  CATKIN_DEPENDS other_catkin_pkg
 #  DEPENDS system_lib
 #)
-catkin_package(CATKIN_DEPENDS message_runtime)
+catkin_package(CATKIN_DEPENDS roscpp message_runtime)
 
 ###########
 ## Build ##
@@ -116,7 +116,7 @@ catkin_package(CATKIN_DEPENDS message_runtime)
 ## Your package locations should be listed before other locations
 include_directories(
 # include
-# ${catkin_INCLUDE_DIRS}
+ ${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
@@ -133,6 +133,7 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/dummiebot_control_node.cpp)
+add_executable(keyboard_control_node teleop_dummiebot_keyboard.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -143,11 +144,13 @@ include_directories(
 ## Add cmake target dependencies of the executable
 ## same as for the library above
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(keyboard_control_node dummiebot_control_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
 # target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
 # )
+target_link_libraries(keyboard_control_node ${catkin_LIBRARIES})
 
 #############
 ## Install ##

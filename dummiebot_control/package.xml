@@ -57,6 +57,8 @@
   <exec_depend>position_controllers</exec_depend>
   <build_depend>message_generation</build_depend>
   <exec_depend>message_runtime</exec_depend>
+  <exec_depend>roscpp</exec_depend>
+  <build_depend>roscpp</build_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
