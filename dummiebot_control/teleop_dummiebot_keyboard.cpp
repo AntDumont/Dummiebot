@@ -28,18 +28,18 @@ public:
       switch(c){
         case 65: //UP
           wheel_msg.linear.x = 1.5;
-            wheel_msg.angular.z = 0.0;
+          wheel_msg.angular.z = 0.0;
           break;
         case 66: //DOWN
           wheel_msg.linear.x = -1.5;
-            wheel_msg.angular.z = 0.0;
+          wheel_msg.angular.z = 0.0;
           break;
         case 67: //RIGHT
-          wheel_msg.linear.x = 0.0;
+          //wheel_msg.linear.x = 0.0;
           wheel_msg.angular.z = -2.0;
           break;
         case 68: //LEFT
-          wheel_msg.linear.x = 0.0;
+          //wheel_msg.linear.x = 0.0;
           wheel_msg.angular.z = 2.0;
           break;
         case 'z':
@@ -70,9 +70,9 @@ public:
           break;
       }
 
-      if(ARROW_KEY){
+      //if(ARROW_KEY){
         pub_wheel.publish(wheel_msg);
-      }
+      //}
 
       ros::spinOnce();
     }
@@ -90,10 +90,10 @@ public:
     if(c==27){ //If the character is a special input
       getchar();
       c = getchar();
-      ARROW_KEY = true;
+      //ARROW_KEY = true;
     }
     else{
-      ARROW_KEY = false;
+      //ARROW_KEY = false;
     }
 
     tcsetattr(STDIN_FILENO, TCSANOW, &oldTerm);
