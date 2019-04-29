@@ -7,13 +7,6 @@
 #define KEYCODE_UP 0x41
 #define KEYCODE_DOWN 0x42
 
-/*
-#define KEYCODE_Z
-#define KEYCODE_Q
-#define KEYCODE_S
-#define KEYCODE_D
-*/
-
 int main(int argc, char const *argv[]) {
 
   ros::init(argc, argv, "keyboard_control_node");

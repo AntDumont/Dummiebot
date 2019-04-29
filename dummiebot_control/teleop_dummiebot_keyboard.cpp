@@ -16,6 +16,7 @@ public:
     pub_y_rotation = nh.advertise<std_msgs::Float64>("/dummiebot/y_rotation_controller/command", 1);
     pub_z_rotation = nh.advertise<std_msgs::Float64>("/dummiebot/z_rotation_controller/command", 1);
     pub_wheel = nh.advertise<geometry_msgs::Twist>("/dummiebot/mobile_base_controller/cmd_vel", 1);
+
   }
 
   void mainLoop(){
@@ -43,25 +44,25 @@ public:
           break;
         case 'z':
           if(y_rot_msg.data <= PI/4){
-            y_rot_msg.data += 0.02;
+            y_rot_msg.data += 0.04;
             pub_y_rotation.publish(y_rot_msg);
           }
           break;
         case 's':
           if(y_rot_msg.data >= -PI/4){
-            y_rot_msg.data -= 0.02;
+            y_rot_msg.data -= 0.04;
             pub_y_rotation.publish(y_rot_msg);
           }
           break;
         case 'd':
           if(z_rot_msg.data >= -PI/2){
-            z_rot_msg.data -= 0.02;
+            z_rot_msg.data -= 0.04;
             pub_z_rotation.publish(z_rot_msg);
           }
           break;
         case 'q':
           if(z_rot_msg.data <= PI/2){
-            z_rot_msg.data += 0.02;
+            z_rot_msg.data += 0.04;
             pub_z_rotation.publish(z_rot_msg);
           }
           break;
