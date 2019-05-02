@@ -7,6 +7,8 @@
   <!-- ros_control dummiebot launch file -->
   <include file="$(find dummiebot_control)/launch/dummiebot_control.launch"/>
 
+  <!-- Sometimes gazebo can't find "dummiebot_description" and sometimes it can't find "robot_description" so I let both of the parameters
+  I couldn't find the source of this bug -->
   <param name="dummiebot_description" command="$(find xacro)/xacro '$(find dummiebot_description)/urdf/dummiebot.xacro'"/>
   <param name="robot_description" command="$(find xacro)/xacro '$(find dummiebot_description)/urdf/dummiebot.xacro'"/>
   <param name="/dummiebot/robot_description" command="$(find xacro)/xacro '$(find dummiebot_description)/urdf/dummiebot.xacro'"/>

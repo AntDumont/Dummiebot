@@ -4,6 +4,7 @@ dummiebot:
     type: joint_state_controller/JointStateController
     publish_rate: 50
 
+  #Mobile base controller
   mobile_base_controller:
     type: diff_drive_controller/DiffDriveController
     left_wheel: left_wheel_hinge
@@ -13,13 +14,12 @@ dummiebot:
     cmd_vel_timeout: 0.5
     wheel_separation: ${chassis_width}
     wheel_radius: ${wheel_radius}
-
   gazebo_ros_control:
     pid_gains:
       left_wheel_hinge: {p: 100.0, i: 0.0, d: 0.0}
       right_wheel_hinge: {p: 100.0, i: 0.0, d: 0.0}
 
-  #Rotation Controllers
+  #Body rotation controller
   z_rotation_controller:
     type: effort_controllers/JointPositionController
     joint: chassis_body_joint
