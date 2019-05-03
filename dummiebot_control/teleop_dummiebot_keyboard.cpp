@@ -11,12 +11,9 @@ class KeyboardControl{
 public:
   KeyboardControl(){
 
-    bool ARROW_KEY = false;
-
     pub_y_rotation = nh.advertise<std_msgs::Float64>("/dummiebot/y_rotation_controller/command", 1);
     pub_z_rotation = nh.advertise<std_msgs::Float64>("/dummiebot/z_rotation_controller/command", 1);
     pub_wheel = nh.advertise<geometry_msgs::Twist>("/dummiebot/mobile_base_controller/cmd_vel", 1);
-
   }
 
   void mainLoop(){
@@ -70,9 +67,7 @@ public:
           break;
       }
 
-      //if(ARROW_KEY){
         pub_wheel.publish(wheel_msg);
-      //}
 
       ros::spinOnce();
     }
@@ -90,10 +85,6 @@ public:
     if(c==27){ //If the character is a special input
       getchar();
       c = getchar();
-      //ARROW_KEY = true;
-    }
-    else{
-      //ARROW_KEY = false;
     }
 
     tcsetattr(STDIN_FILENO, TCSANOW, &oldTerm);
@@ -101,7 +92,6 @@ public:
   }
 
 private:
-  bool ARROW_KEY;
 
   ros::NodeHandle nh;
   ros::Publisher pub_y_rotation;
