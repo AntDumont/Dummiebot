@@ -2,10 +2,17 @@
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="world_name" value="$(find dummiebot_gazebo)/worlds/dummiebot.world"/>
-    <arg name="verbose" value="true"/>
+    <!--arg name="verbose" value="true"/-->
   </include>
+
   <!-- ros_control dummiebot launch file -->
   <include file="$(find dummiebot_control)/launch/dummiebot_control.launch"/>
+
+
+  <param name="/use_sim_time" value="true"></param>
+
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find dummiebot_description)/map.yaml" respawn="false"/>
+  <include file="$(find dummiebot_control)/launch/amcl.launch"/>
 
   <!-- Sometimes gazebo can't find "dummiebot_description" and sometimes it can't find "robot_description" so I let both of the parameters
   I couldn't find the source of this bug -->
@@ -14,5 +21,6 @@
   <param name="/dummiebot/robot_description" command="$(find xacro)/xacro '$(find dummiebot_description)/urdf/dummiebot.xacro'"/>
 
   <node name="dummiebot_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param dummiebot_description -model dummiebot -J body_joint_body 0.0 -J chassis_body_joint 0.0"/>
+
 
 </launch>

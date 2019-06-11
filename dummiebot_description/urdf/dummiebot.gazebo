@@ -1,4 +1,4 @@
-<robot name="dummiebot">
+<robot name="dummiebot" xmlns:xacro="http://ros.org/wiki/xacro">
 
   <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
@@ -44,7 +44,7 @@
   <gazebo reference="hokuyo_link">
     <sensor type="ray" name="head_hokuyo_sensor">
       <pose>0 0 0 0 0 0</pose>
-      <visualize>true</visualize>
+      <visualize>false</visualize>
       <update_rate>40</update_rate>
       <ray>
         <scan>
@@ -71,7 +71,7 @@
         </noise>
       </ray>
       <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_laser.so">
-        <topicName>/rrbot/laser/scan</topicName>
+        <topicName>/dummiebot/laser/scan</topicName>
         <frameName>hokuyo_link</frameName>
       </plugin>
     </sensor>
@@ -88,6 +88,7 @@
   </gazebo>
   <gazebo reference="chassis">
     <self_collide>true</self_collide>
+    <material>Gazebo/White</material>
   </gazebo>
 
 </robot>
