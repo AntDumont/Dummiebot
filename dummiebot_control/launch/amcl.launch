@@ -1,7 +1,7 @@
 
 <launch>
   <!--Example amcl configuration. Descriptions of parameters, as well as a full list of all amcl parameters, can be found at http://www.ros.org/wiki/amcl.-->
-  <node pkg="amcl" type="amcl" name="amcl" args="scan:=/dummiebot/laser/scan" respawn="true">
+  <node pkg="amcl" type="amcl" name="amcl" args="scan:=/dummiebot/scan_multi" respawn="true">
     <!--Publish scans from best pose at a max of 10 Hz -->
     <param name="odom_model_type" value="omni"/>
     <param name="odom_alpha5" value="0.1"/>

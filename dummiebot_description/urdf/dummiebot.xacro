@@ -10,12 +10,12 @@
   <xacro:property name="chassis_mass" value="5"/>
 
   <xacro:property name="caster_radius" value="0.05"/>
-  <xacro:property name="caster_mass" value="5"/>
+  <xacro:property name="caster_mass" value="0.1"/>
 
-  <xacro:property name="wheel_width" value="0.05"/>
+  <xacro:property name="wheel_width" value="0.1"/>
   <xacro:property name="wheel_radius" value="0.2"/>
   <xacro:property name="wheel_pos" value="0.2"/>
-  <xacro:property name="wheel_mass" value="5"/>
+  <xacro:property name="wheel_mass" value="0.5"/>
 
   <xacro:property name="body_height" value="0.6"/>
   <xacro:property name="body_length" value="0.3"/>
@@ -201,20 +201,49 @@
     </inertial>
   </link>
 
-  <joint name="hokuyo_joint" type="fixed">
+  <!-- Hokuyo Laser 1 -->
+  <joint name="hokuyo1_joint" type="fixed">
     <origin xyz="${chassis_length / 2} 0 ${chassis_height}" rpy="0 0 0"/>
     <parent link="chassis"/>
-    <child link="hokuyo_link"/>
+    <child link="hokuyo1_link"/>
   </joint>
 
-  <!-- Hokuyo Laser -->
-  <link name="hokuyo_link">
+  <link name="hokuyo1_link">
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
 	       <box size="0.1 0.1 0.1"/>
       </geometry>
     </collision>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+	       <box size="0.1 0.1 0.1"/>
+      </geometry>
+    </visual>
+
+    <inertial>
+      <mass value="1e-5" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+    </inertial>
+  </link>
+
+    <!-- Hokuyo Laser 2 -->
+    <joint name="hokuyo2_joint" type="fixed">
+      <origin xyz="${-chassis_length / 2} 0 ${chassis_height}" rpy="0 0 ${PI}"/>
+      <parent link="chassis"/>
+      <child link="hokuyo2_link"/>
+    </joint>
+
+    <link name="hokuyo2_link">
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+  	       <box size="0.1 0.1 0.1"/>
+        </geometry>
+      </collision>
 
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>

@@ -7,6 +7,34 @@
     <param name="use_gui" value="TRUE"/>
   </node>
 
+  <!-- Creating the map -->
+  <!-- <node name="gmapping" pkg="gmapping" type="slam_gmapping" args="scan:=/dummiebot/scan_multi"/> -->
+
+  <!-- Using the map -->
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find dummiebot_description)/map.yaml" respawn="false"/>
+  <include file="$(find dummiebot_control)/launch/amcl.launch"/>
+
+  <!-- Path planning -->
+  <node pkg="move_base" type="move_base" name="move_base" output="screen">
+        <remap from="/cmd_vel" to="/dummiebot/mobile_base_controller/cmd_vel"/>
+        <param name="controller_frequency" value="5.0"/>
+        <rosparam file="$(find dummiebot_control)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+        <rosparam file="$(find dummiebot_control)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+        <rosparam file="$(find dummiebot_control)/config/local_costmap_params.yaml" command="load" />
+        <rosparam file="$(find dummiebot_control)/config/global_costmap_params.yaml" command="load" />
+        <rosparam file="$(find dummiebot_control)/config/trajectory_planner.yaml" command="load" />
+    </node>
+
+  <!-- Merge the data of the two lasers in one topic -->
+  <node pkg="ira_laser_tools" name="laserscan_multi_merger" type="laserscan_multi_merger" output="screen">
+    <param name="destination_frame" value="base_link"/>
+    <param name="cloud_destination_topic" value="/merged_cloud"/>
+    <param name="scan_destination_topic" value="/dummiebot/scan_multi"/>
+    <param name="laserscan_topics" value="/dummiebot/laser/scan1 /dummiebot/laser/scan2"/>
+    <param name="angle_min" value="-3.14"/>
+    <param name="angle_max" value="3.14"/>
+  </node>
+
   <!-- Combine joint values -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
 

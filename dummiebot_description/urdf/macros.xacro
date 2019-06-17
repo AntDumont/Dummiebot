@@ -46,11 +46,11 @@
     </link>
 
     <gazebo reference="${lr}_wheel">
-      <mu1 value="1.0"/>
-      <mu2 value="1.0"/>
-      <kp value="10000000.0"/>
-      <kd value="1.0"/>
-      <fdir1 value="1 0 0"/>
+      <mu1 value="100.0"/>
+      <mu2 value="50.0"/>
+      <!-- <kp value="10000000.0"/>
+      <kd value="100.0"/>
+      <fdir1 value="1 0 0"/> -->
       <material>Gazebo/Black</material>
     </gazebo>
 
@@ -58,10 +58,10 @@
       <type>transmission_interface/SimpleTransmission</type>
       <parent link="chassis"/>
       <child link="${lr}_wheel"/>
-      <origin xyz="${-wheel_pos + chassis_length / 2} ${tY * wheel_width / 2 + tY * chassis_width / 2} ${wheel_radius}" rpy="0 0 0"/>
+      <origin xyz="${-wheel_pos + chassis_length / 2} ${tY * wheel_width / 2 + tY * chassis_width / 2 + tY * 0.01} ${wheel_radius}" rpy="0 0 0"/>
       <axis xyz="0 1 0" rpy="0 0 0"/>
       <limit effort="100" velocity="100"/>
-      <joint_properties damping="0.0" friciton="0.5"/>
+      <joint_properties damping="1.0" friciton="0.5"/>
     </joint>
 
     <transmission name="${lr}_trans">
